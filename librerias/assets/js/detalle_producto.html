@@ -1,0 +1,73 @@
+
+
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Mango (Fruit)</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      	<div class="span7">
+				<h3>Name of the Item [$140.00]</h3>
+				<hr class="soft"/>
+				
+				<form class="form-horizontal qtyFrm">
+				  <div class="control-group">
+					<label class="control-label"><span>$140.00</span></label>
+					<div class="controls">
+					<input type="number" class="span6" placeholder="Qty.">
+					</div>
+				  </div>
+				
+				  <div class="control-group">
+					<label class="control-label"><span>Color</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Red</option>
+						  <option>Purple</option>
+						  <option>Pink</option>
+						  <option>Red</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="control-group">
+					<label class="control-label"><span>Materials</span></label>
+					<div class="controls">
+					  <select class="span11">
+						  <option>Material 1</option>
+						  <option>Material 2</option>
+						  <option>Material 3</option>
+						  <option>Material 4</option>
+						</select>
+					</div>
+				  </div>
+				  <h4>100 items in stock</h4>
+				  <p>Nowadays the lingerie industry is one of the most successful business spheres.
+				  Nowadays the lingerie industry is one of ...
+				  <p>
+				  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</button>
+				</form>
+			</div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+        More on Wikipedia
+      </md-button>
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+       Not Useful
+      </md-button>
+      <md-button ng-click="answer('useful')">
+        Useful
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+
