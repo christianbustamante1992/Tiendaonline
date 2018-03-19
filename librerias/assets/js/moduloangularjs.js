@@ -2,23 +2,29 @@ var app = angular.module("Tienda", ['ngMaterial','ngResource']);
 
 app.controller("Mostrarproductos", function ($scope,$http,$mdDialog,ServiceCarrito,Productos) {
 
-	$scope.totalapagar = 0.;
-	$scope.totalarticulos = ServiceCarrito.getcount();
+	$scope.totalapagar = 0;
+	$scope.totalarticulos = 0;
+
+  var url = "http://localhost/Tiendaonline/restproducto";
+
+  cargaproductos(url);
+  cargartiposproductos();
 
 	// body...
-	$http.get("http://localhost/Restapi/").then(function (response) {
-		// body...
-		if (response.data.response.length > 0) {
-			$scope.productos = response.data.response;
-		}else{
-			alert("No se encontraron registros");
-		};
-		
-		
-	},
-	function (response) {
-		// body...
-			$mdDialog.show(
+	function cargaproductos(url) {
+    $http.get(url).then(function (response) {
+    // body...
+    if (response.data.response.length > 0) {
+      $scope.productos = response.data.response;
+    }else{
+      alert("No se encontraron registros");
+    };
+    
+    
+  },
+  function (response) {
+    // body...
+      $mdDialog.show(
       $mdDialog.alert()
         .parent(angular.element(document.querySelector('#popupContainer')))
         .clickOutsideToClose(true)
@@ -28,17 +34,19 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog,ServiceCarri
         .ok('Aceptar')
         
     );
-	}
-	);
+  }
+  );
+  }
 
-	$http.get("http://localhost/Restapi/index.php/tipoproducto").then(function (response) {
-		// body...
-		$scope.tipoproducto = response.data.response;
-		
-	},
-	function (response) {
-		// body...
-			$mdDialog.show(
+  function cargartiposproductos() {
+      $http.get("http://localhost/Tiendaonline/resttipoproducto/").then(function (response) {
+    // body...
+    $scope.tipoproducto = response.data.response;
+    
+  },
+  function (response) {
+    // body...
+      $mdDialog.show(
       $mdDialog.alert()
         .parent(angular.element(document.querySelector('#popupContainer')))
         .clickOutsideToClose(true)
@@ -48,85 +56,22 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog,ServiceCarri
         .ok('Aceptar')
         
     );
-	}
-	);
+  }
+  );
+  }
+
+
 
 	$scope.mostrarxtipoproducto = function (id) {
-		// body...
-		$http.get("http://localhost/Restapi/index.php/producto/tipoproducto/"+id).then(function (response) {
-		// body...
-		if (response.data.response.length > 0) {
-			$scope.productos = response.data.response;
-		}else{
-			alert("No se encontraron registros");
-		};
-		
-	},
-	function (response) {
-		// body...
-		//alert("No se encontraron productos de este tipo.");
-		$mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Mensaje')
-        .textContent('No se encontraron productos de este tipo.')
-        .ariaLabel('Alert Dialog Demo')
-        .ok('Aceptar')
-        
-    );
-	}
-	);
+		var url = "http://localhost/Tiendaonline/resttipoproducto/"+id;
+    cargaproductos(url);
 	};
 
 	$scope.mostrarproductos = function () {
-		// body...
-		$http.get("http://localhost/Restapi/").then(function (response) {
-		// body...
-		$scope.productos = response.data.response;
-		
-	},
-	function (response) {
-		// body...
-		$mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Mensaje')
-        .textContent('No se encontraron productos.')
-        .ariaLabel('Alert Dialog Demo')
-        .ok('Aceptar')
-        
-    );
-	}
-	);
+    var url = "http://localhost/Tiendaonline/restproducto";
+    cargaproductos(url);
 	};
 
-	$scope.agregarproducto = function (id) {
-		var producto = {};
-	$http.get("http://localhost/Restapi/index.php/producto/"+id).then(function (response) {
-		producto.id_producto = response.data.response.id;
-                producto.nombre_foto = response.data.response.nombre_foto;
-		producto.nombre = response.data.response.nombre;
-		producto.stock = response.data.response.stock;
-                producto.cantidad = 1;
-		producto.precio = response.data.response.precio_a;
-                producto.importetotal = response.data.response.precio_a;
-		
-				
-		if (ServiceCarrito.add(producto) === true) {
-                    Productos.save({producto:producto});
-			alert("Se a agregado correctamente");
-		}else{
-			alert("El producto ya esta agregado");
-		}
-		
-		$scope.totalarticulos = ServiceCarrito.getcount();
-		$scope.totalapagar = ServiceCarrito.gettotalapagar();
-
-	});
-	//alert(productos.nombre);
-	};
 
 			
 });

@@ -7,4 +7,3 @@
 <IfModule !mod_rewrite.c>
     ErrorDocument 404 /Store/index.php 
 </IfModule>
-

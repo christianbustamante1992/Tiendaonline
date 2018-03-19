@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -47,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     
   </head>
-<body ng-app="Tienda" ng-controller="Carrito">
+<body ng-app="Tienda" ng-controller="Mostrarproductos">
 <!-- 
 	Upper Header Section 
 -->
@@ -56,25 +58,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="container">
 			<div class="alignR">
 				<div class="pull-left socialNw">
-					<a href="#"><span class="icon-twitter"></span></a>
-					<a href="#"><span class="icon-facebook"></span></a>
-					<a href="#"><span class="icon-youtube"></span></a>
-					<a href="#"><span class="icon-tumblr"></span></a>
+					<a href=""><span class="icon-twitter"></span></a>
+					<a href=""><span class="icon-facebook"></span></a>
+					<a href=""><span class="icon-youtube"></span></a>
+					<a href=""><span class="icon-tumblr"></span></a>
 				</div>
-				<a href="index.html"> <span class="icon-home"></span> Home</a> 
-				<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
+				<a href="<?php echo base_url();?>"> <span class="icon-home"></span> Home</a> 
+				<a href=""><span class="icon-envelope"></span> Contact us</a>
+                                <a href="<?php echo base_url();?>inicio/carrito"><span class="icon-shopping-cart"></span> 0 Item(s) - <span class="badge badge-warning"> $ 0</span></a>
 			</div>
 		</div>
 	</div>
 </div>
 
+<!--
+Lower Header Section 
+-->
 <div class="container">
 <div id="gototop"> </div>
 <header id="header">
 <div class="row">
 	<div class="span4">
 	<h1>
-	<a class="logo" href="index.html"><span>Chrisoft Soluciones</span> 
+	<a class="logo" href=""><span>Chrisoft Soluciones</span> 
 		<img src="<?php echo base_url(); ?>librerias/assets/img/logo-bootstrap-shoping-cart.png" alt="bootstrap sexy shop">
 	</a>
 	</h1>
@@ -83,59 +89,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 </header>
 
-
-
-
-    <div class="row">
-	<div class="span12">
-    <ul class="breadcrumb">
-		<li><a href="http://localhost/Store/">Home</a> <span class="divider">/</span></li>
-		<li class="active">Carrito</li>
-    </ul>
-	<div class="well well-small">
-		<h1>Check Out <small class="pull-right">{{numarticulos}} articulo(s) agregados al carrito </small></h1>
-	<hr class="soften"/>	
-
-	<table class="table table-bordered table-condensed">
-              <thead>
-                <tr>
-                  <th>Producto</th>
-                  <th>Nombre</th>
-	          <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr ng-repeat="item in data">
-                  <td><img width="100" src="http://localhost/TiendaAdm/uploads/{{item.nombre_foto}}" alt=""></td>
-                  <td>{{item.nombre}}</td>
-                  <td>$ {{item.precio}}</td>
-                  <td>
-                      <label>{{item.cantidad}}</label>
+<div class="navbar">
+	  <div class="navbar-inner">
+		<div class="container">
+		  <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </a>
+		  <div class="nav-collapse">
+			<ul class="nav">
+			  <li class=""><a href="">Inicio</a></li>
+			  
+			</ul>
+			<form action="#" class="navbar-search pull-right">
+			  <input type="text" placeholder="Buscar" class="search-query span2" disabled="true">
+			</form>
+			<ul class="nav pull-right">
 			
-				</td>
-                  <td>${{item.importetotal}}</td>
-                </tr>
-				
-                
-				 <tr>
-                  <td colspan="4" class="alignR">Total a pagar:	</td>
-                  <td class="label label-primary"> $ {{totalapagar}}</td>
-                </tr>
-				</tbody>
-            </table><br/>
-		
-		
-            
-			
-	<a href="products.html" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Continue Shopping </a>
-	<a href="login.html" class="shopBtn btn-large pull-right">Next <span class="icon-arrow-right"></span></a>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	</div>
 
-</div>
-</div>
-</div>
+</div><!-- /container -->
+
+
+
 </div>
 </body>
 </html>
-

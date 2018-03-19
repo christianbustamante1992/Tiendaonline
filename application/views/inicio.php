@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="well well-small" ng-repeat = "item in productos | filter: buscar">
 	<div class="row-fluid" >	  
 		<div class="span2">
-			<img src="http://localhost/TiendaAdm/uploads/{{item.nombre_foto}}" alt="">
+			<img src="http://localhost/Tiendaonline/uploads/{{item.nombre_foto}}" alt="">
 		</div>
 		<div class="span6">
 			<h5>{{item.nombre}}</h5>
@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<h3>$ {{item.precio_a}}</h3>
 		
 		<div class="btn-group">
-		  <button ng-click="agregarproducto(item.id)" class="defaultBtn"><span class=" icon-shopping-cart"></span> Agregar a carrito</button>
+		  <a href="" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
 		  
 		 </div>
 			</form>
