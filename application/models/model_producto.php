@@ -31,6 +31,38 @@ class Model_producto extends CI_Model
 			
 	}
 
+	public function getdetallecarrito($id)
+	{
+		# code...
+
+			# code...
+			$query = $this->db->query("SELECT * FROM detalle_carrito WHERE detalle_carrito.id_carritodetalle = $id;");
+			if ($query->num_rows() === 1) {
+				# code...
+				return $query->row();
+			}
+
+			return NULL;
+		
+
+			
+	}
+
+
+	public function guardardetallecarrito($data)
+	{
+		$resultado = $this->db->insert('detalle_carrito',$data);
+		return $resultado;
+			
+	}
+
+	public function editardetallecarrito($id,$data)
+	{
+		$this->db->where('id_carritodetalle',$id);
+		return $this->db->update('detalle_carrito',$data);
+					
+	}
+
 }
 
 ?>

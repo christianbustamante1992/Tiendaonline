@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     
   </head>
-<body ng-app="Tienda" ng-controller="addCarrito">
+<body ng-app="Tienda" ng-controller="Carrito">
 <!-- 
 	Upper Header Section 
 -->

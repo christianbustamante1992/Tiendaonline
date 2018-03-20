@@ -63,8 +63,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<a href="#"><span class="icon-youtube"></span></a>
 					<a href="#"><span class="icon-tumblr"></span></a>
 				</div>
-				<a href="index.html"> <span class="icon-home"></span> Home</a> 
-				<a href="contact.html"><span class="icon-envelope"></span> Contact us</a>
+				<a href=""> <span class="icon-home"></span> Home</a> 
+				<a href=""><span class="icon-envelope"></span> Contact us</a>
                                 <a href="<?php echo base_url();?>index.php/inicio/carrito"><span class="icon-shopping-cart"></span> {{totalarticulos}} Item(s) - <span class="badge badge-warning"> $ {{totalapagar}}</span></a>
 			</div>
 		</div>
@@ -80,7 +80,7 @@ Lower Header Section
 <div class="row">
 	<div class="span4">
 	<h1>
-	<a class="logo" href="index.html"><span>Chrisoft Soluciones</span> 
+	<a class="logo" href=""><span>Chrisoft Soluciones</span> 
 		<img src="<?php echo base_url(); ?>librerias/assets/img/logo-bootstrap-shoping-cart.png" alt="bootstrap sexy shop">
 	</a>
 	</h1>

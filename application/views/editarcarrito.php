@@ -39,10 +39,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php
     $atributos = array('method' => 'POST','class' => 'form-horizontal qtyFrm'); 
-    echo form_open('inicio/guardar/',$atributos); 
+    echo form_open('inicio/update/',$atributos); 
     $atributos = array('type' => 'hidden', 
                        'name' => 'id',
                        'value' => $producto->id
+                       
+                      );
+    echo form_input($atributos);
+     $atributos = array('type' => 'hidden', 
+                       'name' => 'iddetallecarrito',
+                       'value' => $detallecarrito->id_carritodetalle
                        
                       );
     echo form_input($atributos);
@@ -61,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $atributos = array('type' => 'number', 
                        'name' => 'cantidad',
                        'class' => 'span6',
-                       'value' => '1',
+                       'value' => $detallecarrito->cantidad,
                        'min' => '1',
                        'max' => $producto->stock
                        
@@ -78,7 +84,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php 
 
     
-    echo form_submit('submit', 'Agregar al carrito', 'class="shopBtn"'); 
+    echo form_submit('submit', 'Actualizar item', 'class="shopBtn"'); 
     ?>
     
   
