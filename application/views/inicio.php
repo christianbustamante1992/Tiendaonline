@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<h3>$ {{item.precio_a}}</h3>
 		
 		<div class="btn-group">
-		  <a href="http://localhost/Store/inicio/addcarrito/{{item.id}}" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
+		  <a href="<?php echo base_url();?>inicio/addcarrito/{{item.id}}" class="shopBtn"><span class=" icon-shopping-cart"></span> Add to cart</a>
 		  
 		 </div>
 			</form>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2018 a las 00:58:08
+-- Tiempo de generación: 21-03-2018 a las 00:36:02
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -27,13 +27,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `detalle_carrito` (
-`id` int(10) NOT NULL,
+`id_carritodetalle` int(10) NOT NULL,
   `id_producto` int(2) NOT NULL,
   `id_usuario` int(2) NOT NULL,
   `precio` decimal(4,2) NOT NULL,
   `cantidad` int(5) NOT NULL,
   `totalimporte` decimal(7,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -83,12 +83,30 @@ CREATE TABLE IF NOT EXISTS `producto` (
 --
 
 INSERT INTO `producto` (`id`, `id_tipoproducto`, `id_marcaproducto`, `nombre`, `descripcion`, `stock`, `precio_a`, `precio_b`, `precio_c`, `nombre_foto`) VALUES
-(1, 3, 7, 'IPHONE 7', 'CAPACIDAD: 128GB, COLOR: BLANCO', 7, '3.22', '3.33', '4.44', '6090905_sd3.jpg'),
-(2, 2, 2, 'hp pavilion g4-1085la', 'CAPACIDAD: 128GB, COLOR: BLANCO', 5, '3.22', '3.33', '3.33', '6.png'),
+(1, 3, 7, 'IPHONE 7', 'CAPACIDAD: 128GB, COLOR: BLANCO', 0, '3.22', '3.33', '4.44', '6090905_sd3.jpg'),
+(2, 2, 2, 'hp pavilion g4-1085la', 'CAPACIDAD: 128GB, COLOR: BLANCO', 2, '3.22', '3.33', '3.33', '6.png'),
 (3, 2, 2, 'hp ploma', 'CAPACIDAD: 128GB, COLOR: BLANCO', 6, '3.22', '4.44', '99.99', 'bootstrap-ecommerce-templates.PNG'),
 (4, 1, 3, 'mochila negra', 'CAPACIDAD: 128GB, COLOR: BLANCO', 5, '3.22', '3.33', '3.33', '5.png'),
 (5, 4, 6, 'canon multifuncion', 'CAPACIDAD: 128GB, COLOR: BLANCO', 20, '3.22', '3.33', '3.33', '2.png'),
 (6, 5, 3, 'mouse inalambrico', 'CAPACIDAD: 128GB, COLOR: BLANCO', 20, '3.22', '3.33', '3.33', 'c.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `prueba`
+--
+
+CREATE TABLE IF NOT EXISTS `prueba` (
+  `id` int(11) NOT NULL,
+  `nombre` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `prueba`
+--
+
+INSERT INTO `prueba` (`id`, `nombre`) VALUES
+(4, 0);
 
 -- --------------------------------------------------------
 
@@ -163,7 +181,7 @@ INSERT INTO `usuario` (`id`, `id_tipousuario`, `cedula`, `nombre`, `apellido`, `
 -- Indices de la tabla `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
- ADD PRIMARY KEY (`id`), ADD KEY `id_producto` (`id_producto`), ADD KEY `id_usuario` (`id_usuario`);
+ ADD PRIMARY KEY (`id_carritodetalle`), ADD KEY `id_producto` (`id_producto`), ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `marca_producto`
@@ -203,7 +221,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `detalle_carrito`
 --
 ALTER TABLE `detalle_carrito`
-MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+MODIFY `id_carritodetalle` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `marca_producto`
 --
