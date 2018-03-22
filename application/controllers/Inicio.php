@@ -63,6 +63,31 @@ class Inicio extends CI_Controller {
 		
 	}
 
+	public function pruebaguardar()
+	{
+		$data = array('id_producto' => $this->input->post('id'),
+		              'id_usuario' => '1',
+		              'precio' => $this->input->post('precio'),
+		              'cantidad' => $this->input->post('cantidad'),
+		              'totalimporte' => (float) $this->input->post('precio') * (float) $this->input->post('cantidad')
+					 );
+
+		$this->form_validation->set_rules('id', 'producto', 'is_unique[detalle_carrito.id_producto]');
+		$this->form_validation->set_message('is_unique', 'Este producto ya ah sido agregado.');
+
+		if ($this->form_validation->run() != false) {
+			# code...
+			$resultado = $this->model_producto->guardardetallecarrito($data);
+			redirect('inicio/carrito');
+		}else{
+			$data = array('producto' => $this->model_producto->get($this->input->post('id')));
+			$this->load->view('layouts/headeraddcarrito');
+			$this->load->view('addcarrito',$data);
+		}
+		
+		
+	}
+
 	public function update()
 	{
 		$data = array('id_producto' => $this->input->post('id'),
@@ -76,6 +101,14 @@ class Inicio extends CI_Controller {
 			redirect('inicio/carrito');
 		
 		
+		
+	}
+
+	public function pruebaconsumo()
+	{
+		$data = json_decode(file_get_contents('http://localhost/Tiendaonline/restproducto'));
+		$respuesta = array('response' => $data->{'response'});
+		echo json_encode($respuesta);		
 		
 	}
 }

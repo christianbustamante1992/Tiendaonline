@@ -5,19 +5,24 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog) {
 	$scope.totalapagar = 0;
 	$scope.totalarticulos = 0;
 
-  var url = "http://localhost/Tiendaonline/restproducto";
+  var url = "http://localhost/Store/restproducto";
 
   upload();
   cargaproductos(url);
   cargartiposproductos();
 
   function upload() {
-          $http.get('http://localhost/Tiendaonline/restdetallecarrito').then(function (response){
+          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
         
                 $scope.totalarticulos = response.data.response.length;    
                 $scope.totalapagar = obtenertotalapagar(response.data.response);
         
-          });
+          },
+              function (response) {
+                // body...
+                  //console.log(response.data.error);
+              }
+          );
     }
     
     function obtenertotalapagar(data) {
@@ -57,7 +62,7 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog) {
   }
 
   function cargartiposproductos() {
-      $http.get("http://localhost/Tiendaonline/resttipoproducto/").then(function (response) {
+      $http.get("http://localhost/Store/resttipoproducto/").then(function (response) {
     // body...
     $scope.tipoproducto = response.data.response;
     
@@ -81,12 +86,12 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog) {
 
 
 	$scope.mostrarxtipoproducto = function (id) {
-		var url = "http://localhost/Tiendaonline/resttipoproducto/"+id;
+		var url = "http://localhost/Store/resttipoproducto/"+id;
     cargaproductos(url);
 	};
 
 	$scope.mostrarproductos = function () {
-    var url = "http://localhost/Tiendaonline/restproducto";
+    var url = "http://localhost/Store/restproducto";
     cargaproductos(url);
 	};
 
@@ -101,13 +106,17 @@ app.controller('Carrito', function ($scope,$http,$mdDialog,Productos,Detallecarr
     upload();
     
     function upload() {
-          $http.get('http://localhost/Tiendaonline/restdetallecarrito').then(function (response){
+          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
         
                 $scope.data = response.data.response;
                 $scope.numarticulos = response.data.response.length;    
                 $scope.totalapagar = obtenertotalapagar(response.data.response);
         
-          });
+          },
+              function (response) {
+                // body...
+                  //console.log(response.data.error);
+              });
     }
     
     function obtenertotalapagar(data) {
@@ -160,7 +169,7 @@ app.controller('Carrito', function ($scope,$http,$mdDialog,Productos,Detallecarr
     };
 
     $scope.comprar = function () {
-       $http.get('http://localhost/Tiendaonline/restdetallecarrito').then(function (response){
+       $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
                 
                 if (consultarstock(response.data.response) === true) {
                   actualizarstock(response.data.response);
@@ -183,7 +192,19 @@ app.controller('Carrito', function ($scope,$http,$mdDialog,Productos,Detallecarr
                 
                 
         
-          });
+          },
+              function (response) {
+                $mdDialog.show(
+      $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Mensaje')
+        .textContent('No se ha agregado ningún producto.')
+        .ariaLabel('Alert Dialog Demo')
+        .ok('Aceptar')
+        
+    );
+              });
     }
     
    
@@ -198,7 +219,7 @@ app.controller('addCarrito', function ($scope,$http,$mdDialog){
 
 
   function cargartiposproductos() {
-      $http.get("http://localhost/Tiendaonline/resttipoproducto/").then(function (response) {
+      $http.get("http://localhost/Store/resttipoproducto/").then(function (response) {
     // body...
     $scope.tipoproducto = response.data.response;
     
@@ -220,12 +241,17 @@ app.controller('addCarrito', function ($scope,$http,$mdDialog){
   }
     
     function upload() {
-          $http.get('http://localhost/Tiendaonline/restdetallecarrito').then(function (response){
+          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
         
                 $scope.numarticulos = response.data.response.length;    
                 $scope.totalapagar = obtenertotalapagar(response.data.response);
         
-          });
+          },
+              function (response) {
+                // body...
+                  //console.log(response.data.error);
+              }
+          );
     }
     
     function obtenertotalapagar(data) {

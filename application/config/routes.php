@@ -52,3 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'inicio';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['restdetallecarrito']['get'] = 'restdetallecarrito/index';
+$route['restdetallecarrito/(:num)']['get'] = 'restdetallecarrito/find/$1';
+$route['restdetallecarrito']['post'] = 'restdetallecarrito/index';
+$route['restdetallecarrito/(:num)']['put'] = 'restdetallecarrito/index/$1';
+$route['restdetallecarrito/(:num)']['delete'] = 'restdetallecarrito/index/$1';
+
+
+$route['restproducto']['get'] = 'restproducto/index';
+$route['restproducto/(:num)']['get'] = 'restproducto/find/$1';
+$route['restproducto/(:num)']['put'] = 'restproducto/index/$1';
+
+$route['resttipoproducto']['get'] = 'resttipoproducto/index';
+$route['resttipoproducto/(:num)']['get'] = 'resttipoproducto/find/$1';
