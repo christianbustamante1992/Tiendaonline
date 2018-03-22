@@ -37,8 +37,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</td>
                   <td>$ {{item.totalimporte}}</td>
                   <td>
-                    <a href="<?php echo base_url(); ?>inicio/editarcarrito/{{item.id_carritodetalle}}"><button type="button" class="btn btn-success">Editar</button></a>
-                    <a href="<?php echo base_url(); ?>marca/eliminarmarca/"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                    <a href="<?php echo base_url(); ?>inicio/editarcarrito/{{item.id_detallecarrito}}"><button type="button" class="btn btn-success">Editar</button></a>
+                    <a href="" ng-click="eliminarproducto(item.id_detallecarrito)"><button type="button" class="btn btn-danger">Eliminar</button></a>
                   </td>
                 </tr>
 				

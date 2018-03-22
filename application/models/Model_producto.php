@@ -36,7 +36,7 @@ class Model_producto extends CI_Model
 		# code...
 
 			# code...
-			$query = $this->db->query("SELECT * FROM detalle_carrito WHERE detalle_carrito.id_carritodetalle = $id;");
+			$query = $this->db->query("SELECT * FROM detalle_carrito WHERE detalle_carrito.id_detallecarrito = $id;");
 			if ($query->num_rows() === 1) {
 				# code...
 				return $query->row();
@@ -58,7 +58,7 @@ class Model_producto extends CI_Model
 
 	public function editardetallecarrito($id,$data)
 	{
-		$this->db->where('id_carritodetalle',$id);
+		$this->db->where('id_detallecarrito',$id);
 		return $this->db->update('detalle_carrito',$data);
 					
 	}

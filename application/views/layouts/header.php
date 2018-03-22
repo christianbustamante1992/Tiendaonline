@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				<a href=""> <span class="icon-home"></span> Home</a> 
 				<a href=""><span class="icon-envelope"></span> Contact us</a>
-                                <a href="<?php echo base_url();?>index.php/inicio/carrito"><span class="icon-shopping-cart"></span> {{totalarticulos}} Item(s) - <span class="badge badge-warning"> $ {{totalapagar}}</span></a>
+                                <a href="<?php echo base_url();?>inicio/carrito"><span class="icon-shopping-cart"></span> {{totalarticulos}} Item(s) - <span class="badge badge-warning"> $ {{totalapagar}}</span></a>
 			</div>
 		</div>
 	</div>

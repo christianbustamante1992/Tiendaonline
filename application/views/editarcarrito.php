@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     echo form_input($atributos);
      $atributos = array('type' => 'hidden', 
                        'name' => 'iddetallecarrito',
-                       'value' => $detallecarrito->id_carritodetalle
+                       'value' => $detallecarrito->id_detallecarrito
                        
                       );
     echo form_input($atributos);
