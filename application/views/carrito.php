@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<li class="active">Carrito</li>
     </ul>
 	<div class="well well-small">
-		<h1>Carrito <small class="pull-right"> {{numarticulos}} Items agregados al carrito </small></h1>
+		<h1>Carrito </h1>
 	<hr class="soften"/>	
 
 	<table class="table table-bordered table-condensed">
@@ -19,32 +19,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <tr>
                   <th>Foto</th>
                   <th>Producto</th>
-				  <th>Precio</th>
+				          <th>Precio</th>
                   <th>Cantidad</th>
-                  <th>Total</th>
-                  <th></th>
+                  
+                  <th>Subtotal</th>
 				</tr>
               </thead>
               <tbody>
-                <tr ng-repeat = "item in data">
-                  <td><img width="100" src="http://localhost/Tiendaonline/uploads/{{item.nombre_foto}}" alt=""></td>
-                  <td>{{item.nombre}}<br>{{item.descripcion}}</td>
+                <?php foreach ($this->cart->contents() as $items):?>
+                <tr>
+                  <td><img width="100" src="http://localhost/Tiendaonline/uploads/<?php echo $items['nombre_foto']; ?>" alt=""></td>
+                  <td><?php echo $items['name']; ?></td>
                   
-                  <td>$ {{item.precio}}</td>
+                  <td>$ <?php echo $items['price']; ?></td>
                   <td>
-                  	<label class="span1" style="max-width:34px">{{item.cantidad}}</label>
+                  	<label class="span1" style="max-width:34px"><?php echo $items['qty'] ?></label>
 									  
 				</td>
-                  <td>$ {{item.totalimporte}}</td>
-                  <td>
-                    <a href="<?php echo base_url(); ?>inicio/editarcarrito/{{item.id_detallecarrito}}"><button type="button" class="btn btn-success">Editar</button></a>
-                    <a href="" ng-click="eliminarproducto(item.id_detallecarrito)"><button type="button" class="btn btn-danger">Eliminar</button></a>
-                  </td>
+                  
+                 <td>$ <?php echo $items['subtotal']; ?></td>
                 </tr>
-				
+				<?php endforeach; ?>
                 <tr>
-                  <td colspan="5" class="alignR">Total a pagar:	</td>
-                  <td> <b>$ {{totalapagar}}</b></td>
+                  <td colspan="4" class="alignR"><b>Total a pagar:	</b></td>
+                  <td> <b>$ <?php echo $this->cart->format_number($this->cart->total()); ?></b></td>
                 </tr>
                  
 				</tbody>

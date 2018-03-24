@@ -7,34 +7,10 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog) {
 
   var url = "http://localhost/Store/restproducto";
 
-  upload();
   cargaproductos(url);
   cargartiposproductos();
 
-  function upload() {
-          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
-        
-                $scope.totalarticulos = response.data.response.length;    
-                $scope.totalapagar = obtenertotalapagar(response.data.response);
-        
-          },
-              function (response) {
-                // body...
-                  //console.log(response.data.error);
-              }
-          );
-    }
-    
-    function obtenertotalapagar(data) {
-        var sumatoria = 0.00;
-      for (var i = 0; i < data.length; i++) {
-        sumatoria = sumatoria + (parseFloat(data[i].precio)*parseFloat(data[i].cantidad));
-      }
-      return sumatoria.toFixed(2);
-    }
-
-	// body...
-	function cargaproductos(url) {
+  function cargaproductos(url) {
     $http.get(url).then(function (response) {
     // body...
     if (response.data.response.length > 0) {
@@ -99,122 +75,10 @@ app.controller("Mostrarproductos", function ($scope,$http,$mdDialog) {
 			
 });
 
-app.controller('Carrito', function ($scope,$http,$mdDialog,Productos,Detallecarrito){
-    
-    $scope.numarticulos = 0;
-    $scope.totalapagar = 0;
-    upload();
-    
-    function upload() {
-          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
-        
-                $scope.data = response.data.response;
-                $scope.numarticulos = response.data.response.length;    
-                $scope.totalapagar = obtenertotalapagar(response.data.response);
-        
-          },
-              function (response) {
-                // body...
-                  //console.log(response.data.error);
-              });
-    }
-    
-    function obtenertotalapagar(data) {
-        var sumatoria = 0.00;
-      for (var i = 0; i < data.length; i++) {
-      	sumatoria = sumatoria + (parseFloat(data[i].precio)*parseFloat(data[i].cantidad));
-      }
-      return sumatoria.toFixed(2);
-    };
-
-     function consultarstock(data) {
-      var bandera = true
-      for (var i = 0; i < data.length; i++) {
-        if (parseInt(data[i].stock) < parseInt(data[i].cantidad)) {
-          return false;
-        }else{
-          
-        }
-        
-      }
-
-      return bandera;
-    };
-
-     function actualizarstock(data) {
-      for (var i = 0; i < data.length; i++) {
-        var newstock = parseInt(data[i].stock) - parseInt(data[i].cantidad);
-        var producto = {};
-        producto.id_tipoproducto = data[i].id_tipoproducto;
-        producto.id_marcaproducto = data[i].id_marcaproducto;
-        producto.nombre = data[i].nombre;
-        producto.descripcion = data[i].descripcion;
-        producto.stock = newstock;
-        producto.precio_a = data[i].precio_a;
-        producto.precio_b = data[i].precio_b;
-        producto.precio_c = data[i].precio_c;
-        producto.nombre_foto = data[i].nombre_foto;
-
-        Productos.update({id: data[i].id},{producto: producto});
-        
-      }
-    };
-
-    function eliminarcarrito(data) {
-      for (var i = 0; i < data.length; i++) {
-        
-        Detallecarrito.delete({id: data[i].id_carritodetalle});
-        
-      }
-    };
-
-    $scope.comprar = function () {
-       $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
-                
-                if (consultarstock(response.data.response) === true) {
-                  actualizarstock(response.data.response);
-                  eliminarcarrito(response.data.response);
-
-                  location.href ="http://localhost/Store/";
-                  ///Detallecarrito.delete();
-                }else{
-                  $mdDialog.show(
-                  $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#popupContainer')))
-                    .clickOutsideToClose(true)
-                    .title('Mensaje')
-                    .textContent('No existe suficiente stock. Por favor actualice la cantidad de cada uno de los productos.')
-                    .ariaLabel('Alert Dialog Demo')
-                    .ok('Aceptar')
-                    
-                  );
-                }
-                
-                
-        
-          },
-              function (response) {
-                $mdDialog.show(
-      $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Mensaje')
-        .textContent('No se ha agregado ningún producto.')
-        .ariaLabel('Alert Dialog Demo')
-        .ok('Aceptar')
-        
-    );
-              });
-    }
-    
-   
-});
-
 app.controller('addCarrito', function ($scope,$http,$mdDialog){
     
     $scope.numarticulos = 0;
     $scope.totalapagar = 0;
-    upload();
     cargartiposproductos();
 
 
@@ -240,41 +104,138 @@ app.controller('addCarrito', function ($scope,$http,$mdDialog){
   );
   }
     
-    function upload() {
-          $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
-        
-                $scope.numarticulos = response.data.response.length;    
-                $scope.totalapagar = obtenertotalapagar(response.data.response);
-        
-          },
-              function (response) {
-                // body...
-                  //console.log(response.data.error);
-              }
-          );
-    }
+      
+   
+});
+
+app.controller('Carrito', function ($scope,$http,$mdDialog,Productos){
     
-    function obtenertotalapagar(data) {
-        var sumatoria = 0.00;
-      for (var i = 0; i < data.length; i++) {
-        sumatoria = sumatoria + (parseFloat(data[i].precio)*parseFloat(data[i].cantidad));
-      }
-      return sumatoria.toFixed(2);
+   function addcarrito() {
+
+    var datacarrito;
+    
+     
+     $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
+              datacarrito =response.data.response;
+              $http.get('http://localhost/Store/restproducto/'+datacarrito[0].id_producto).then(function (respuesta){
+                  var newstock = parseInt(respuesta.data.response.stock) - parseInt(datacarrito[0].cantidad);
+                  var producto = {};
+                  producto.id_tipoproducto = respuesta.data.response.id_tipoproducto;
+                  producto.id_marcaproducto = respuesta.data.response.id_marcaproducto;
+                  producto.nombre = respuesta.data.response.nombre;
+                  producto.descripcion = respuesta.data.response.descripcion;
+                  producto.stock = newstock;
+                  producto.precio_a = respuesta.data.response.precio_a;
+                  producto.precio_b = respuesta.data.response.precio_b;
+                  producto.precio_c = respuesta.data.response.precio_c;
+                  producto.nombre_foto = respuesta.data.response.nombre_foto;
+
+                  Productos.update({id: respuesta.data.response.id},{producto: producto});
+                                        
+              },function (respuesta) {
+                             
+              });
+                                        
+      },function (response) {
+                     
+      });
+
+
+
+
+                 
+               /* for (var i = 0; i < response.data.response.length; i++) {
+
+                  var producto = getdataproducto(response.data.response[i].id_producto);
+                   
+                    if (consultarstock(producto, response.data.response[i].cantidad) === true) {
+                        actualizarstock(producto, response.data.response[i].cantidad);
+                        alert("Se actualizo correctamente");
+                      }else{
+                        $mdDialog.show(
+                        $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title('Mensaje')
+                          .textContent('No existe suficiente stock. Por favor actualice la cantidad de cada uno de los productos.')
+                          .ariaLabel('Alert Dialog Demo')
+                          .ok('Aceptar')
+                          
+                        );
+                      }
+                 }*/
+             
+        
+            }
+   
+
+   function getdataproducto(id) {
+      /*$http.get('http://localhost/Store/restproducto/'+id).then(function (response){
+              return response.data.response;        
+                                        
+      },function (response) {
+                     
+      });*/
+
+      var url = "http://localhost/Store/restproducto/"+id;
+      console.log(url);
+   }
+
+    function getdatacarrito() {
+      $http.get('http://localhost/Store/restdetallecarrito').then(function (response){
+              return response.data.response.length;
+                                        
+      },function (response) {
+                     
+      });
+   }
+    
+    function consultarstock(dataproducto,cantidad) {
+      /*var bandera = true
+      
+        if (parseInt(dataproducto[0].stock) < parseInt(cantidad)) {
+          return false;
+        }else{
+          
+        }
+        
+      
+
+      return bandera;*/
+      console.log(dataproducto[0].stock);
+    };
+
+     function actualizarstock(data,cantidad) {
+      
+        var newstock = parseInt(data[0].stock) - parseInt(cantidad);
+        var producto = {};
+        producto.id_tipoproducto = data[0].id_tipoproducto;
+        producto.id_marcaproducto = data[0].id_marcaproducto;
+        producto.nombre = data[0].nombre;
+        producto.descripcion = data[0].descripcion;
+        producto.stock = newstock;
+        producto.precio_a = data[0].precio_a;
+        producto.precio_b = data[0].precio_b;
+        producto.precio_c = data[0].precio_c;
+        producto.nombre_foto = data[0].nombre_foto;
+
+        Productos.update({id: data[0].id},{producto: producto});
+        
+      
+    };
+
+    
+
+    $scope.comprar = function () {
+  addcarrito();
     }
     
    
 });
 
-
-
  app.factory('Productos', ['$resource', function ($resource) {
-        return $resource('http://localhost/Tiendaonline/restproducto/:id', {id: "@_id"}, {
+        return $resource('http://localhost/Store/restproducto/:id', {id: "@_id"}, {
             update: {method: "PUT", params: {id: "@_id"}}
         });
     }]);
 
- app.factory('Detallecarrito', ['$resource', function ($resource) {
-        return $resource('http://localhost/Tiendaonline/restdetallecarrito/:id', {id: "@_id"}, {
-            update: {method: "PUT", params: {id: "@_id"}}
-        });
-    }]);

@@ -54,10 +54,10 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['restdetallecarrito']['get'] = 'restdetallecarrito/index';
-$route['restdetallecarrito/(:num)']['get'] = 'restdetallecarrito/find/$1';
+/*$route['restdetallecarrito/(:num)']['get'] = 'restdetallecarrito/find/$1';
 $route['restdetallecarrito']['post'] = 'restdetallecarrito/index';
 $route['restdetallecarrito/(:num)']['put'] = 'restdetallecarrito/index/$1';
-$route['restdetallecarrito/(:num)']['delete'] = 'restdetallecarrito/index/$1';
+$route['restdetallecarrito/(:num)']['delete'] = 'restdetallecarrito/index/$1';*/
 
 
 $route['restproducto']['get'] = 'restproducto/index';

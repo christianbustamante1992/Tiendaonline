@@ -48,6 +48,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       );
     echo form_input($atributos);
     $atributos = array('type' => 'hidden', 
+                       'name' => 'nombre',
+                       'value' => $producto->nombre
+                       
+                      );
+    echo form_input($atributos);
+    $atributos = array('type' => 'hidden', 
+                       'name' => 'nombre_foto',
+                       'value' => $producto->nombre_foto
+                       
+                      );
+    echo form_input($atributos);
+    $atributos = array('type' => 'hidden', 
                        'name' => 'precio',
                        'value' => $producto->precio_a
                        

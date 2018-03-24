@@ -6,7 +6,7 @@ class Inicio extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_producto');		
+			
 	}
 
 	public function index()
@@ -23,64 +23,30 @@ class Inicio extends CI_Controller {
 
 	public function addcarrito($id)
 	{
-		$data = array('producto' => $this->model_producto->get($id));
+		$cadena = "http://localhost/Store/restproducto/".(string)$id;
+		$data = json_decode(file_get_contents($cadena));
+		$datos = array('producto' => $data->{'response'});
 		$this->load->view('layouts/headeraddcarrito');
-		$this->load->view('addcarrito',$data);
-	}
-
-	public function editarcarrito($id)
-	{
-		$detallecarrito = $this->model_producto->getdetallecarrito($id);
-		$data = array('producto' => $this->model_producto->get($detallecarrito->id_producto),
-					  'detallecarrito' => $this->model_producto->getdetallecarrito($id)
-					  );
-		$this->load->view('layouts/headeraddcarrito');
-		$this->load->view('editarcarrito',$data);
+		$this->load->view('addcarrito',$datos);
+		
 	}
 
 	public function guardar()
 	{
-		$data = array('id_producto' => $this->input->post('id'),
-		              'id_usuario' => '1',
-		              'precio' => $this->input->post('precio'),
-		              'cantidad' => $this->input->post('cantidad'),
-		              'totalimporte' => (float) $this->input->post('precio') * (float) $this->input->post('cantidad')
+		
+		$data = array('id' => $this->input->post('id'),
+		              'name' => $this->input->post('nombre'),
+		              'price' => $this->input->post('precio'),
+		              'qty' => $this->input->post('cantidad'),
+		              'nombre_foto' => $this->input->post('nombre_foto')
 					 );
 
-		$this->form_validation->set_rules('id', 'producto', 'is_unique[detalle_carrito.id_producto]');
-		$this->form_validation->set_message('is_unique', 'Este producto ya ah sido agregado.');
-
-		if ($this->form_validation->run() != false) {
-			# code...
-			$resultado = $this->model_producto->guardardetallecarrito($data);
-			redirect('inicio/carrito');
-		}else{
-			$data = array('producto' => $this->model_producto->get($this->input->post('id')));
-			$this->load->view('layouts/headeraddcarrito');
-			$this->load->view('addcarrito',$data);
-		}
-		
+		$this->cart->insert($data);
+		redirect('http://localhost/Store/inicio/carrito');	
 		
 	}
 
 	
-
-	public function update()
-	{
-		$data = array('id_producto' => $this->input->post('id'),
-		              'id_usuario' => '1',
-		              'precio' => $this->input->post('precio'),
-		              'cantidad' => $this->input->post('cantidad'),
-		              'totalimporte' => (float) $this->input->post('precio') * (float) $this->input->post('cantidad')
-					 );
-
-			$resultado = $this->model_producto->editardetallecarrito($this->input->post('iddetallecarrito'),$data);
-			redirect('inicio/carrito');
-		
-		
-		
-	}
-
 	public function pruebaconsumo()
 	{
 		$data = json_decode(file_get_contents('http://localhost/Tiendaonline/restproducto'));
