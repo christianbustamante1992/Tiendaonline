@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	         
 			
 	<a href="<?php echo base_url(); ?>" class="shopBtn btn-large"><span class="icon-arrow-left"></span> Continuar Comprando </a>
-	<a href ng-click = "comprar()" class="shopBtn btn-large pull-right">Comprar <span class="icon-arrow-right"></span></a>
+	<a href ng-click="comprar()" class="shopBtn btn-large pull-right">Comprar <span class="icon-arrow-right"></span></a>
 
 </div>
 </div>

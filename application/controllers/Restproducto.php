@@ -8,6 +8,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . "/libraries/REST_Controller.php";
 
+use GuzzleHttp\Client;
+
+
+
 /**
 * 
 */
@@ -19,6 +23,7 @@ class Restproducto extends REST_Controller
 		# code...
 		parent::__construct();
 		//$this->load->model('model_restproducto');
+		$this->load->add_package_path(FCPATH.'vendor/restclient')->library('restclient')->remove_package_path(FCPATH.'vendor/restclient');
 	}
 
 		public function index_get()
@@ -42,7 +47,20 @@ class Restproducto extends REST_Controller
 			$this->response(NULL, 400);
 		}
 
+		$json = $this->restclient->put('http://localhost/Tiendaonline/restproducto/1', $this->put('producto'));
+
+        $this->restclient->debug();
+		/*$data = array('producto' => 'hola');
+		$client = new Client();
+		$response = $client->request('PUT','http://localhost/Tiendaonline/restproducto/1', $this->put('producto'));
+		$body = $response->getStatusCode();
+// Implicitly cast the body to a string and echo it
+		echo $body;
 		//$productos = json_decode(file_put_contents('http://localhost/Tiendaonline/restproducto/'.(string)$id,$this->put('producto')));
+		//$data = array('producto' => $this->put('producto'));
+		//echo json_encode($data);
+
+		/*$data = array('producto' => $this->put('producto'));
 		$url = "http://localhost/Tiendaonline/restproducto/".(string)$id;
 		$curl = curl_init($url);
 		
@@ -50,14 +68,15 @@ class Restproducto extends REST_Controller
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->put('producto')));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
 
 		// Make the REST call, returning the result
 		$response = curl_exec($curl);
 		/*if (!$response) {
 		    die("Connection Failure.n");
 		}*/
-		$this->response(array('response' => $response),400);
+		//echo $response;
+		//$this->response(array('response' => $response),);
 		/*if (! is_null($response)) {
 			# code...
 			$this->response(array('response' => 'Producto Actualizado'),200);
